@@ -1,3 +1,5 @@
+#pragma once
+
 class Weather
 {
     float temp = 0;
@@ -6,7 +8,10 @@ class Weather
     float temp_max = 0;
 
 public:
-    void update();
+    // returns true if update OK
+    bool update();
     float getTemp() const { return temp; }
     float getFeelsLike() const { return feels_like; }
+    float getTempMin() const { return temp_min; }
+    float getTempMax() const { return temp_max; }
 };

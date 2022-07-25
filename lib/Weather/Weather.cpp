@@ -5,7 +5,7 @@
 #include "Weather.h"
 #include "secrets.h" // API key, location info
 
-void Weather::update()
+bool Weather::update()
 {
     WiFiClient client;
     HTTPClient http;
@@ -18,9 +18,10 @@ void Weather::update()
 
     if (error)
     {
-        Serial.print(F("deserializeJson() failed: "));
-        Serial.println(error.f_str());
-        return;
+        /** Uncomment Serial if debugging **/
+        // Serial.print(F("deserializeJson() failed: "));
+        // Serial.println(error.f_str());
+        return false;
     }
 
     /** Unused JSON is commented out **/
@@ -65,4 +66,5 @@ void Weather::update()
     // int cod = doc["cod"]; // 200 (http code)
 
     http.end();
+    return true;
 }
