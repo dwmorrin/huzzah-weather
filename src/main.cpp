@@ -28,20 +28,28 @@ void setup()
   digitalWrite(12, LOW);
   digitalWrite(14, LOW);
   servo.attach(13);
+#ifdef DEBUG
   Serial.begin(115200);
   while (!Serial)
     ;
+#endif
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
+#ifdef DEBUG
   Serial.print("connecting");
+#endif
   while (WiFi.status() != WL_CONNECTED)
   {
+#ifdef DEBUG
     Serial.print('.');
+#endif
     delay(500);
   }
 
+#ifdef DEBUG
   Serial.println(" connected");
+#endif
 
   udp.begin(8888);
   setSyncProvider(getNtpTime);
@@ -52,8 +60,6 @@ void setup()
   prevTime = now();
 
   weather.update();
-  // digitalWrite(0, LOW); // no red LED means setup OK
-  Serial.println("setup done");
 }
 
 void displayTempMin()
@@ -91,13 +97,13 @@ void button(int pin, void (*callback)())
 {
   if (!digitalRead(pin))
   {
-    delay(200);
+    delay(100);
     {
       if (!digitalRead(pin))
       {
         callback();
         while (!digitalRead(pin))
-          delay(200);
+          delay(100);
       }
     }
   }
